@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+#
+# Load modules
+#
+
+# Purge the module environment to avoid conflicts
+module reset
+
+# Load the git module to remove warning about git version <= 2 (required))
+module load system py-matlab-proxy
+
+# Load the Matlab module (required)
+module load <%= context.sh_codeserver_version %>
+
+<%- unless context.sh_modules.blank? -%>
+# Load additional modules (optional)
+module load <%= context.sh_modules %>
+<%- end -%> 
+
+# Set Matlab path
+MATLAB_PATH="/share/software/user/open/<%= context.sh_codeserver_version %>"
+
+MATLAB_DATAROOT="$HOME/.local/share/matlab"
+
+# Expose the password to the server.
+# export PASSWORD="$password"
+
+# Print compute node.
+echo "$(date): Running on compute node ${compute_node}:$port"
+
+# Set working directory to home directory
+cd "${HOME}"
+
+#
+# Start Matlab Proxy.
+#
+echo "$(date): Started Matlab"
+echo ""
+
+export MWI_APP_PORT="$port"
+
+matlab-proxy-app

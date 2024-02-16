@@ -1,0 +1,16 @@
+cluster: "sherlock"
+
+form:
+  - auto_modules_R
+<%- IO.foreach(File.expand_path(File.dirname(__FILE__))+"/../_common/form/form.yml") do |line| %>
+  <%= line %>
+<%- end -%>
+
+attributes:
+
+  auto_modules_R:
+    default: false
+
+<%- IO.foreach(File.expand_path(File.dirname(__FILE__))+"/../_common/form/attributes.yml") do |line| %>
+  <%= line %>
+<%- end -%>
